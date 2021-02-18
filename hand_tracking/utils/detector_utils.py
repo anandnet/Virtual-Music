@@ -7,21 +7,22 @@ import os
 from threading import Thread
 from datetime import datetime
 import cv2
-from utils import label_map_util
+from . import label_map_util
 from collections import defaultdict
 
 
 detection_graph = tf.Graph()
-sys.path.append("..")
-
+#sys.path.append("..")
+import os 
 # score threshold for showing bounding boxes.
 _score_thresh = 0.27
-
+PROJECT_DIR=os.path.abspath(".")
+MODEL_DIR=os.path.join(PROJECT_DIR,"hand_tracking")
 MODEL_NAME = 'hand_inference_graph'
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
-PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
+PATH_TO_CKPT =os.path.join(MODEL_DIR,MODEL_NAME + '/frozen_inference_graph.pb')
 # List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = os.path.join(MODEL_NAME, 'hand_label_map.pbtxt')
+PATH_TO_LABELS = os.path.join(MODEL_DIR,os.path.join(MODEL_NAME, 'hand_label_map.pbtxt'))
 
 NUM_CLASSES = 1
 # load label map
@@ -50,7 +51,7 @@ def load_inference_graph():
 
 # draw the detected bounding boxes on the images
 # You can modify this to also draw a label.
-def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np):
+def roi_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np):
     for i in range(num_hands_detect):
         if (scores[i] > score_thresh):
             (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
@@ -66,13 +67,11 @@ def draw_box_on_image(num_hands_detect, score_thresh, scores, boxes, im_width, i
                 left=0 if p1[0]-40<0 else p1[0]-40
                 right=int(im_width) if p2[0]+20>im_width else p2[0]+20
                 crop_image = img[top:bottom, left:right]
-                print(crop_image.shape[0],crop_image.shape[1])
                 cvt=cv2.cvtColor(crop_image,cv2.COLOR_RGB2BGR)
-                cv2.imshow("Cropped", cvt)
+                return cvt
                 
             except Exception as e:
-                print(e)
-                print(im_width,right,im_height,bottom)
+                return None
 
 
 # Show fps value on image.
