@@ -83,7 +83,7 @@ cv2.namedWindow('Paint', cv2.WINDOW_FREERATIO)
    
   
 # Loading the default webcam of PC. 
-cap = cv2.VideoCapture(-1) 
+cap = cv2.VideoCapture(2) 
 
 already_in_blue = False
 already_in_red = False
