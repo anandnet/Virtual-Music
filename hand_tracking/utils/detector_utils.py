@@ -53,6 +53,7 @@ def load_inference_graph():
 # You can modify this to also draw a label.
 def roi_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height, image_np):
     for i in range(num_hands_detect):
+        blank_image = np.zeros((im_height,im_width,3), np.uint8)
         if (scores[i] > score_thresh):
             (left, right, top, bottom) = (boxes[i][1] * im_width, boxes[i][3] * im_width,
                                           boxes[i][0] * im_height, boxes[i][2] * im_height)
@@ -62,16 +63,19 @@ def roi_image(num_hands_detect, score_thresh, scores, boxes, im_width, im_height
             img=image_np.copy()
             cv2.rectangle(image_np, p1, p2, (77, 255, 9), 3, 1)
             try:
-                top=0 if p1[1]-40<0 else p1[1]-40
+                top=0 if p1[1]-100<0 else p1[1]-100
                 bottom=int(im_height) if p2[1]+10>im_height else p2[1]+10
                 left=0 if p1[0]-40<0 else p1[0]-40
                 right=int(im_width) if p2[0]+20>im_width else p2[0]+20
                 crop_image = img[top:bottom, left:right]
                 cvt=cv2.cvtColor(crop_image,cv2.COLOR_RGB2BGR)
-                return cvt
+                blank_image[top:bottom, left:right]=img[top:bottom, left:right]
+                return blank_image
                 
             except Exception as e:
-                return None
+                pass
+        else:
+            return blank_image
 
 
 # Show fps value on image.

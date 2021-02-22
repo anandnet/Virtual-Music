@@ -1,3 +1,4 @@
+from music_playing.main import Music
 from hand_tracking.utils import detector_utils as detector_utils
 import cv2
 import tensorflow as tf
@@ -14,9 +15,10 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
     start_time = datetime.datetime.now()
     num_frames = 0
-    im_width, im_height = (320,240)
+    im_width, im_height = (640,480)
     # max number of hands we want to detect/track
     num_hands_detect = 1
+    music=Music()
 
     cv2.namedWindow('Single-Threaded Detection', cv2.WINDOW_NORMAL)
 
@@ -51,8 +53,13 @@ if __name__ == '__main__':
                     cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR))
         
         if(roi is not None):
-            cv2.imshow("ROI",roi)
+            img=music.play(cv2.cvtColor(roi, cv2.COLOR_RGB2BGR))
+            cv2.imshow("ROI",img)
+        else:
+            #print("No Image")
+            pass
 
         if cv2.waitKey(25) & 0xFF == ord('q'):
+            cap.release() 
             cv2.destroyAllWindows()
             break
