@@ -1,4 +1,5 @@
 opencv-python
 numpy
 keras
-tensorflow 
+tensorflow
+mediapipe 

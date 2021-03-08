@@ -38,17 +38,21 @@ class Music():
         # the upper and lower ranges of the 
         # HSV required for particular colour
 
-        blueLower = np.array([55, 146, 36]) #55, 146, 36   #100,60,60 -old
-        blueUpper = np.array([168, 255, 255]) #168, 255, 255 #120,255,255
+        blue=np.loadtxt("data/blue.txt",dtype=np.int)
+        green=np.loadtxt("data/green.txt",dtype=np.int)
+        red= np.loadtxt("data/red.txt",dtype=np.int)
 
-        redLower_1 = np.array([134, 174, 61]) # 0, 189, 65  #0,80,80    #129, 188, 92
-        redUpper_1 = np.array([198,255,255]) # 255, 255, 255   #10,255,255
+        blueLower = blue[0]#np.array([55, 146, 36]) #55, 146, 36   #100,60,60 -old
+        blueUpper = blue[1]#np.array([168, 255, 255]) #168, 255, 255 #120,255,255
+
+        redLower_1 = red[0]#np.array([134, 174, 61]) # 0, 189, 65  #0,80,80    #129, 188, 92
+        redUpper_1 = red[1]#np.array([198,255,255]) # 255, 255, 255   #10,255,255
 
         redLower_2 = np.array([170,80,80])
         redUpper_2 = np.array([180,255,255])
 
-        yellowLower = np.array([16, 89, 49]) #16, 89, 49 #23, 41, 133
-        yellowUpper = np.array([70, 255, 233]) # 70, 255, 233   #40, 150, 255
+        yellowLower = green[0]#np.array([16, 89, 49]) #16, 89, 49 #23, 41, 133
+        yellowUpper = green[1]#np.array([70, 255, 233]) # 70, 255, 233   #40, 150, 255
 
         purple_lower = [114, 104, 101]
         purple_upper = [145, 148, 243]
@@ -237,7 +241,7 @@ class Music():
                 #sound.unload()
                 clr = color.yellow
             
-            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), 25, clr, 2) 
+            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), 25, color.green, 2) 
             
             
 
