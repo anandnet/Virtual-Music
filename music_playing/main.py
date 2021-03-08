@@ -24,6 +24,7 @@ class Music():
         self.snare = mixer.Sound(os.path.join(PATH, "beachparty_a_snare_01.wav"))
 
     def play(self,frame):
+        
 
         #sound = SoundLoader.load('untitled_a_kick_01.wav')
         #kick = mixer.music.load("untitled_a_kick_01.wav")
@@ -130,8 +131,7 @@ class Music():
         
         cnts_yellow, _ = cv2.findContours(Mask_yellow.copy(), cv2.RETR_EXTERNAL, 
             cv2.CHAIN_APPROX_SIMPLE)
-    
-        # Ifthe contours are formed 
+        radius_=25
         if len(cnts_blue) > 0:
             
             # sorting the contours to find biggest  
@@ -143,12 +143,14 @@ class Music():
 
             # Get the radius of the enclosing circle  
             # around the found contour 
-            ((x_b, y_b), radius_b) = cv2.minEnclosingCircle(cnt)
-            
+            ((x, y), radius) = cv2.minEnclosingCircle(cnt)
             #print( center, (x, y))
-            if int(y_b)+(h//2 - 100) + radius_b > (h//2 + 50+5):
-                
+            print(int(y)+(h//2 - 100) + radius , (h//2 + 50+5))
+
+            if int(y)+(h//2 - 100) + radius_ > (h//2 + 40+5):
+                print("already in blue")
                 if not self.already_in_blue:
+                    print("green")
                 #if not mixer.music.get_busy():
                     self.kick.play()
                 
@@ -159,15 +161,15 @@ class Music():
                 #    sound.play()
                     #print("Not availabe")
                 clr = color.cyan
-                #cv2.circle(frame, (int(x_b)+10, int(y_b)+(h//2 - 100)), 10, color.cyan, 2)
+                #cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), int(radius), color.cyan, 2)
             else:
             
-                already_in_blue = False
+                self.already_in_blue = False
                 #sound.stop()
                 #sound.unload()
                 clr = color.blue
             
-            cv2.circle(frame, (int(x_b)+10, int(y_b)+(h//2 - 100)), 25, clr, 2)
+            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), radius_, clr, 2) 
 
         if len(cnts_red) > 0:
             
@@ -183,7 +185,7 @@ class Music():
             ((x, y), radius) = cv2.minEnclosingCircle(cnt)
             
             #print( center, (x, y))
-            if int(y)+(h//2 - 100) + radius > (h//2 + 50+5):
+            if int(y)+(h//2 - 100) + radius_ > (h//2 + 40+5):
                 
                 if not self.already_in_red:
                 #if not mixer.music.get_busy():
@@ -204,7 +206,7 @@ class Music():
                 #sound.unload()
                 clr = color.red
             
-            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), 25, clr, 2) 
+            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), radius_, clr, 2) 
         
         if len(cnts_yellow) > 0:
             
@@ -218,11 +220,13 @@ class Music():
             # Get the radius of the enclosing circle  
             # around the found contour 
             ((x, y), radius) = cv2.minEnclosingCircle(cnt)
-            
+            print("out out yellow")
             #print( center, (x, y))
-            if int(y)+(h//2 - 100) + radius > (h//2 + 50+5):
-                
+            print(int(y)+(h//2 - 100) + radius , (h//2 + 50+5))
+            if int(y)+(h//2 - 100) + radius_ > (h//2 + 40+5):
+                #print("already in yellow")
                 if not self.already_in_yellow:
+                    #print("green")
                 #if not mixer.music.get_busy():
                     self.snare.play()
                 
@@ -241,7 +245,7 @@ class Music():
                 #sound.unload()
                 clr = color.yellow
             
-            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), 25, color.green, 2) 
+            cv2.circle(frame, (int(x)+10, int(y)+(h//2 - 100)), radius_, color.green, 2) 
             
             
 
