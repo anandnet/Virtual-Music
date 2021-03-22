@@ -1,0 +1,76 @@
+#:kivy 2.0.0
+#:import NavButton widgets.navButton
+#:import KivyCamera widgets.kivycamera
+#:import HomeScreen screens.home
+#:import ManualConfigScreen screens.manualconfig
+#:import SettingScreen screens.settings
+#:import PlayScreen screens.play
+#:import HelpScreen screens.help
+#:import InstrumentSelector widgets.selector
+Root:
+    #orientation:"horizontal"
+    #Side Navigation bar
+    BoxLayout:
+        orientation:"vertical"
+        size_hint_x:0
+        width:50
+        canvas:
+            Color:
+                rgba:0.15,0.15,0.15,1
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        ScrollView:
+            BoxLayout:
+                spacing:12
+                orientation:"vertical"
+                NavButton:
+                    icon:"home-outline"
+                    tooltip_text:"Home"
+                    group:"x"
+                    active:True
+                    on_release:
+                        root.ids.screenmanager.current = 'home' #if self.active else None
+                NavButton:
+                    icon:"play-circle-outline"
+                    tooltip_text:"Play"
+                    group:"x"
+                    on_release:
+                        print("Hello");
+                        root.ids.screenmanager.current = 'play' #if self.active else None
+                NavButton:
+                    icon:"tools"
+                    tooltip_text:"Manual Configration"
+                    group:"x"
+                    on_release:
+                        root.ids.screenmanager.current = 'manconfig' #if self.active else None
+                NavButton:
+                    icon:"cogs"
+                    tooltip_text:"Settings"
+                    group:"x"
+                    on_release:
+                        root.ids.screenmanager.current = 'setting' #if self.active else None
+                NavButton:
+                    icon:"help-circle-outline"
+                    tooltip_text:"Help"
+                    group:"x"
+                    on_release:
+                        root.ids.screenmanager.current = 'help' #if self.active else None
+                BoxLayout:
+                    
+
+    #Main WorkSpace
+    BoxLayout:
+        ScreenManager:
+            id:screenmanager
+            HomeScreen:
+                name:"home"
+            PlayScreen:
+                name:"play"
+            ManualConfigScreen:
+                name:"manconfig"
+            SettingScreen:
+                name:"setting"
+            HelpScreen:
+                name:"help"
+        
