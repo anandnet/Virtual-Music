@@ -1,0 +1,94 @@
+#:kivy 2.0.0
+#:import HomeScreen screens.home
+#:import SettingScreen screens.settings
+#:import MusicMappingScreen screens.mapping
+#:import HelpScreen screens.help
+#:import Loader widgets.loader
+#:import NavButton widgets.navButton
+#:import KivyCamera widgets.kivycamera
+#:import InstrumentSelector widgets.selector
+#:import theme utils.theme
+Root:
+    orientation:"vertical"
+    #Side Navigation bar + Content Screen
+    BoxLayout:
+        MDCard:
+            orientation:"vertical"
+            size_hint_x:0
+            width:"50dp"
+            md_bg_color:theme.get_color(app.theme_cls.theme_style,"TabColor")
+            #canvas:
+            #    Color:
+            #        rgba:theme.get_color(app.theme_cls.theme_style,"TabColor") #0.15,0.15,0.15,1
+            #    Rectangle:
+            #        pos:self.pos
+            #        size:self.size
+            ScrollView:
+                BoxLayout:
+                    spacing:"12dp"
+                    orientation:"vertical"
+                    NavButton:
+                        icon:"home-outline"
+                        tooltip_text:"Home"
+                        group:"x"
+                        active:True
+                        on_release:
+                            root.ids.screenmanager.current = 'Home' #if self.active else None
+                    NavButton:
+                        icon:"play-circle-outline"
+                        tooltip_text:"Map Music"
+                        group:"x"
+                        on_release:
+                            print("Hello");
+                            root.ids.screenmanager.current = 'Map Music' #if self.active else None
+                    
+                    NavButton:
+                        icon:"cogs"
+                        tooltip_text:"Settings"
+                        group:"x"
+                        on_release:
+                            root.ids.screenmanager.current = 'setting' #if self.active else None
+                    NavButton:
+                        icon:"help-circle-outline"
+                        tooltip_text:"Help"
+                        group:"x"
+                        on_release:
+                            root.ids.screenmanager.current = 'help' #if self.active else None
+                    #NavButton:
+                    #    icon:"tools"
+                    #    tooltip_text:"Expert Mode"
+                    #    group:"x"
+                    #    on_release:
+                    #        root.ids.screenmanager.current = 'Expert Mode' #if self.active else None
+                    BoxLayout:
+                        
+
+        #Main WorkSpace
+        BoxLayout:
+            ScreenManager:
+                id:screenmanager
+                HomeScreen:
+                    name:"Home"
+                MusicMappingScreen:
+                    name:"Map Music"
+                SettingScreen:
+                    name:"setting"
+                HelpScreen:
+                    name:"help"
+                
+    #bottom bar
+    BoxLayout:
+        size_hint_y:None
+        height:"25dp"
+        canvas:
+            Color:
+                rgba:theme.get_color(app.theme_cls.theme_style,"BottomStatusColor")#0.5,0.1,1,1
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        MDLabel:
+            halign:"center"
+            text:root.ids.screenmanager.current
+            #theme_text_color:"Primary"
+            color:theme.get_color(app.theme_cls.theme_style,"PrimaryTextColor")
+        

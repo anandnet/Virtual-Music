@@ -1,5 +1,6 @@
-opencv-python
-numpy
-keras
-tensorflow
-mediapipe 
+kivymd
+kivy
+pygame
+mediapipe
+plyer
+pygrabber
