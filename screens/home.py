@@ -122,6 +122,7 @@ class Camera(KivyCamera):
 
     def play(self, status, hand_indx, interval):
         if(status):
+            #print(["left","right"][hand_indx],status)
             true_index = [i for i, each in enumerate(status) if each == True]
             if(len(true_index) == 1):
                 self.music.play(hand_indx, true_index[0])

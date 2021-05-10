@@ -9,6 +9,7 @@ def refresh():
             #indx_str = str((["Piano", "Guitar", "Violin", "Xylophone", "Drums"]).index(name.capitalize()))
             for root_, dirs_, files_ in os.walk("assets/tones/"+name, topdown=False):
                 dic[name] = files_
+            dic[name].insert(0, "None")
 
     print(dic)
     with open('utils/notes.json', 'w') as json_file:

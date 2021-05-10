@@ -6,7 +6,7 @@ circle_spec = mp_drawing.DrawingSpec(color=(0, 0, 255), circle_radius=2)
 connection_spec = ''
 # For webcam input:
 hands = mp_hands.Hands(
-    min_detection_confidence=0.6, min_tracking_confidence=0.5)
+    min_detection_confidence=0.7, min_tracking_confidence=0.7)
 
 
 def detect_hand(frame):
